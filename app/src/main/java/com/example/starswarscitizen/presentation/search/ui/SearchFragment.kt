@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.starswarscitizen.R
 import com.example.starswarscitizen.databinding.FragmentSearchBinding
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.presentation.search.models.ScreenState
 import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -22,6 +25,8 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: SearchViewModel by viewModel()
     private lateinit var searchAdapter: SearchAdapter
+
+    private lateinit var badge:  BadgeDrawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        badge = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)?.getBadge(R.id.searchFragment)!!
+
         setRecyclerView()
 
         binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -56,11 +63,16 @@ class SearchFragment : Fragment() {
 
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             searchAdapter.submitList(results)
+            badge.number = results.size
         }
 
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             manageScreenContent(screenState)
         }
+
+
+
+
 
     }
 
