@@ -2,21 +2,27 @@ package com.example.starswarscitizen.presentation.search.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.R
 import com.example.starswarscitizen.databinding.FragmentSearchBinding
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.presentation.search.models.SearchScreenState
 import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel
+import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel.Companion.SEARCH_DEBOUNCE_DELAY
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -28,7 +34,7 @@ class SearchFragment : Fragment() {
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchResult: List<StarWarsItem>
     private lateinit var badge: BadgeDrawable
-    private var searchJob: Job? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +81,19 @@ class SearchFragment : Fragment() {
             manageScreenContent(screenState)
         }
 
+        binding.searchEditText.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.searchDebounce(s)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
     }
 
 
@@ -162,8 +180,14 @@ class SearchFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(binding.searchConstraintLayout.windowToken, 0)
     }
 
+
+
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

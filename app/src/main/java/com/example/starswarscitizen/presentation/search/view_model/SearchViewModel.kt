@@ -3,12 +3,15 @@ package com.example.starswarscitizen.presentation.search.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.starswarscitizen.domain.favourite.AddToFavouritesUseCase
 import com.example.starswarscitizen.domain.favourite.DeleteFromFavouritesUseCase
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.domain.search.GetSearchResultUseCase
 import com.example.starswarscitizen.presentation.search.models.SearchScreenState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
@@ -16,6 +19,8 @@ class SearchViewModel(
     private val deleteFromFavouritesUseCase: DeleteFromFavouritesUseCase,
     private val addToFavouritesUseCase: AddToFavouritesUseCase
 ) : ViewModel() {
+
+    private var searchJob: Job? = null
 
     private val _screenState = MutableLiveData<SearchScreenState>(SearchScreenState.Intro)
     val screenState: LiveData<SearchScreenState> = _screenState
@@ -69,9 +74,29 @@ class SearchViewModel(
         }
     }
 
-    fun setIntro(){
+    fun setIntro() {
         _screenState.value = SearchScreenState.Intro
         _searchResults.value = emptyList()
+    }
+
+
+    fun searchDebounce(s: CharSequence?) {
+        if (!s.isNullOrEmpty() && s.length >= 2) {
+
+            _screenState.value = SearchScreenState.Loading
+
+            val searchInput = s.toString()
+            searchJob?.cancel()
+
+            searchJob = viewModelScope.launch {
+                delay(SEARCH_DEBOUNCE_DELAY)
+                startSearch(searchInput)
+            }
+        }
+    }
+
+    companion object {
+        const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 
 
