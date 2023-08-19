@@ -5,5 +5,6 @@ data class StarWarsItem(
     val infoField1: String,
     val infoField2: String,
     val infoField3: String,
-    val type: StarWarsObject
+    val type: StarWarsObject,
+    val isFavourite: Boolean = false
 )
