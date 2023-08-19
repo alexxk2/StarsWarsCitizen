@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -38,9 +39,9 @@
             android:layout_height="match_parent"
             android:background="@drawable/search_edit_text_background"
             android:imeOptions="actionGo"
-            android:saveEnabled="false"
             android:inputType="text"
             android:padding="0dp"
+            android:saveEnabled="false"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,10 +52,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="12dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="@id/search_layout"
-        app:layout_constraintStart_toStartOf="@id/search_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_layout"
         tools:itemCount="5"
         tools:listitem="@layout/search_item" />
@@ -79,10 +80,10 @@
             android:src="@drawable/ic_death_star" />
 
         <TextView
-            android:layout_marginTop="24dp"
             android:id="@+id/text_not_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/nothing_is_found"
             android:textSize="20sp" />
     </LinearLayout>
@@ -99,29 +100,57 @@
 
     <LinearLayout
         android:id="@+id/intro_layout"
-        android:orientation="vertical"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/intro"
             android:layout_gravity="center"
-            android:src="@drawable/ic_r2d2"
-            />
+            android:contentDescription="@string/intro"
+            android:src="@drawable/ic_r2d2" />
 
         <TextView
-            android:layout_marginTop="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/intro_text"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/error_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/error"
+            android:src="@drawable/ic_dart_vader" />
+
+        <TextView
+            android:paddingHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="24dp"
+            android:text="@string/something_went_wrong"
             android:textSize="20sp" />
 
     </LinearLayout>

@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class NetworkClientImpl : NetworkClient {
 
-    private val baseUrl = "https://swapi.dev/api"
+    private val baseUrl = "https://swapi.dev"
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())

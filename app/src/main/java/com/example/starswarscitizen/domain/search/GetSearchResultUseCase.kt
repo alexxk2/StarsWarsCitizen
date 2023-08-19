@@ -48,7 +48,7 @@ class GetSearchResultUseCase(private val searchRepository: SearchRepository) {
             resultList.addAll(listFromPlanet)
             resultList.addAll(listFromStarships)
 
-            resultList
+            resultList.sortedBy { it.name }
 
         } else return emptyList()
 

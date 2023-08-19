@@ -11,6 +11,16 @@
     <string name="default_text">Default text</string>
     <string name="add_to_favourite">add to favourite</string>
     <string name="item_image">item image</string>
+    <string name="error">error</string>
+    <string name="something_went_wrong">The dark side of the Force did something with your device. Check your internet connection and try again</string>
+    <string name="gender_field">Gender:   %1$s</string>
+    <string name="starships_field">Number of starships piloted:   %1$s</string>
+    <string name="diameter_field">Diameter:   %1$s</string>
+    <string name="population_field">Population:   %1$s</string>
+    <string name="model_field">Model:   %1$s</string>
+    <string name="manufacturer_field">Manufacturer:   %1$s</string>
+    <string name="passengers_field">Number of passengers:   %1$s</string>
+
 
     <!--Favourite screen-->
 

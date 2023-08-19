@@ -1,17 +1,27 @@
 package com.example.starswarscitizen.presentation.search.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.databinding.FragmentSearchBinding
+import com.example.starswarscitizen.domain.models.StarWarsItem
+import com.example.starswarscitizen.presentation.search.models.ScreenState
+import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SearchViewModel by viewModel()
+    private lateinit var searchAdapter: SearchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,14 +33,113 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSearchBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setRecyclerView()
 
+        binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_GO -> {
+                    viewModel.startSearch(binding.searchEditText.text.toString())
+                    true
+                }
+
+                else -> false
+            }
+
+        }
+
+        viewModel.searchResults.observe(viewLifecycleOwner) { results ->
+            searchAdapter.submitList(results)
+        }
+
+        viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
+            manageScreenContent(screenState)
+        }
+
+    }
+
+
+    private fun setRecyclerView() {
+        searchAdapter =
+            SearchAdapter(requireContext(), object : SearchAdapter.SearchActionListener {
+
+                override fun onItemClick(starWarsItem: StarWarsItem) {
+
+                }
+
+                override fun onAddFavouriteClick(starWarsItem: StarWarsItem) {
+
+                }
+
+                override fun onRemoveFavouriteClick(starWarsItem: StarWarsItem) {
+
+                }
+            })
+        binding.recyclerView.adapter = searchAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.setHasFixedSize(true)
+    }
+
+    private fun manageScreenContent(screenState: ScreenState) {
+        with(binding) {
+            when (screenState) {
+                ScreenState.Content -> {
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                    errorLayout.visibility = View.GONE
+                    introLayout.visibility = View.GONE
+                    notFoundLayout.visibility = View.GONE
+                    hideKeyboard()
+                }
+
+                ScreenState.Empty -> {
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                    errorLayout.visibility = View.GONE
+                    introLayout.visibility = View.GONE
+                    notFoundLayout.visibility = View.VISIBLE
+                    hideKeyboard()
+                }
+
+                ScreenState.Error -> {
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                    errorLayout.visibility = View.VISIBLE
+                    introLayout.visibility = View.GONE
+                    notFoundLayout.visibility = View.GONE
+                    hideKeyboard()
+                }
+
+                ScreenState.Intro -> {
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                    errorLayout.visibility = View.GONE
+                    introLayout.visibility = View.VISIBLE
+                    notFoundLayout.visibility = View.GONE
+                }
+
+                ScreenState.Loading -> {
+                    progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                    errorLayout.visibility = View.GONE
+                    introLayout.visibility = View.GONE
+                    notFoundLayout.visibility = View.GONE
+                }
+            }
+        }
+
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.searchConstraintLayout.windowToken, 0)
     }
 
     override fun onDestroyView() {

@@ -9,9 +9,10 @@
         android:id="@+id/search_item_layout"
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_to_favourite_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,9 +20,10 @@
             android:id="@+id/item_image"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="30"
             android:contentDescription="@string/item_image"
-            android:scaleType="fitCenter"
+            android:padding="8dp"
             android:src="@drawable/ic_r2d2" />
 
         <LinearLayout
@@ -32,37 +34,45 @@
 
             <TextView
                 android:id="@+id/item_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
                 android:gravity="center_vertical"
-                android:text="@string/default_text"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="@string/default_text" />
 
             <TextView
                 android:id="@+id/item_info_1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/default_text"
-                android:textSize="11sp" />
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="11sp"
+                tools:text="@string/default_text" />
 
             <TextView
                 android:id="@+id/item_info_2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/default_text"
-                android:textSize="11sp" />
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="11sp"
+                tools:text="@string/default_text" />
 
             <TextView
                 android:id="@+id/item_info_3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lines="1"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:text="@string/default_text"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                tools:text="@string/default_text" />
 
         </LinearLayout>
     </LinearLayout>
@@ -72,7 +82,7 @@
         android:id="@+id/add_to_favourite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="30dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/add_to_favourite"
         android:src="@drawable/ic_add_to_favourite"
@@ -84,7 +94,7 @@
         android:id="@+id/remove_from_favourite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="30dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/add_to_favourite"
         android:src="@drawable/ic_remove_from_favourite"

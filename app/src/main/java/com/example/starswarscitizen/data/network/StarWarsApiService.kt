@@ -9,17 +9,17 @@ import retrofit2.http.Query
 
 interface StarWarsApiService {
 
-    @GET("/starships")
+    @GET("/api/starships")
     suspend fun getStarships(
         @Query("search")searchInput: String
     ): Response<StarshipsSearchResponse>
 
-    @GET("/people")
+    @GET("/api/people")
     suspend fun getPeople(
         @Query("search")searchInput: String
     ): Response<PeopleSearchResponse>
 
-    @GET("/planets")
+    @GET("/api/planets")
     suspend fun getPlanets(
         @Query("search")searchInput: String
     ): Response<PlanetsSearchResponse>

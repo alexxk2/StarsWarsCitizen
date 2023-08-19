@@ -5,6 +5,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#919191</color>
     <color name="light_grey">#EDEDED</color>
-
+    <color name="blue">#03A9F4</color>
+    <color name="green">#4CAF50</color>
+    <color name="orange">#D17D00</color>
+    <color name="red">#F44336</color>
 
 </resources>
