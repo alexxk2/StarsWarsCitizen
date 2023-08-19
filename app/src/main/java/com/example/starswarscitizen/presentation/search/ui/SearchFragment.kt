@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.R
 import com.example.starswarscitizen.databinding.FragmentSearchBinding
 import com.example.starswarscitizen.domain.models.StarWarsItem
-import com.example.starswarscitizen.presentation.search.models.ScreenState
+import com.example.starswarscitizen.presentation.search.models.SearchScreenState
 import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Job
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -25,8 +26,9 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: SearchViewModel by viewModel()
     private lateinit var searchAdapter: SearchAdapter
-
-    private lateinit var badge:  BadgeDrawable
+    private lateinit var searchResult: List<StarWarsItem>
+    private lateinit var badge: BadgeDrawable
+    private var searchJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        badge = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)?.getBadge(R.id.searchFragment)!!
+        badge = activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+            ?.getBadge(R.id.searchFragment)!!
 
         setRecyclerView()
 
@@ -63,15 +66,14 @@ class SearchFragment : Fragment() {
 
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             searchAdapter.submitList(results)
+            searchResult = results
+
             badge.number = results.size
         }
 
         viewModel.screenState.observe(viewLifecycleOwner) { screenState ->
             manageScreenContent(screenState)
         }
-
-
-
 
 
     }
@@ -86,11 +88,11 @@ class SearchFragment : Fragment() {
                 }
 
                 override fun onAddFavouriteClick(starWarsItem: StarWarsItem) {
-
+                    viewModel.addToFavourite(starWarsItem)
                 }
 
                 override fun onRemoveFavouriteClick(starWarsItem: StarWarsItem) {
-
+                    viewModel.removeFromFavourite(starWarsItem)
                 }
             })
         binding.recyclerView.adapter = searchAdapter
@@ -98,10 +100,10 @@ class SearchFragment : Fragment() {
         binding.recyclerView.setHasFixedSize(true)
     }
 
-    private fun manageScreenContent(screenState: ScreenState) {
+    private fun manageScreenContent(screenState: SearchScreenState) {
         with(binding) {
             when (screenState) {
-                ScreenState.Content -> {
+                SearchScreenState.Content -> {
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                     errorLayout.visibility = View.GONE
@@ -110,7 +112,7 @@ class SearchFragment : Fragment() {
                     hideKeyboard()
                 }
 
-                ScreenState.Empty -> {
+                SearchScreenState.Empty -> {
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.GONE
                     errorLayout.visibility = View.GONE
@@ -119,7 +121,7 @@ class SearchFragment : Fragment() {
                     hideKeyboard()
                 }
 
-                ScreenState.Error -> {
+                SearchScreenState.Error -> {
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.GONE
                     errorLayout.visibility = View.VISIBLE
@@ -128,7 +130,7 @@ class SearchFragment : Fragment() {
                     hideKeyboard()
                 }
 
-                ScreenState.Intro -> {
+                SearchScreenState.Intro -> {
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.GONE
                     errorLayout.visibility = View.GONE
@@ -136,7 +138,7 @@ class SearchFragment : Fragment() {
                     notFoundLayout.visibility = View.GONE
                 }
 
-                ScreenState.Loading -> {
+                SearchScreenState.Loading -> {
                     progressBar.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
                     errorLayout.visibility = View.GONE
@@ -147,6 +149,12 @@ class SearchFragment : Fragment() {
         }
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.setIntro()
+    }
+
 
     private fun hideKeyboard() {
         val inputMethodManager =

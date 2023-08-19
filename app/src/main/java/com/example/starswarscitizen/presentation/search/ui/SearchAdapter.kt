@@ -80,6 +80,15 @@ class SearchAdapter(
             }
             itemName.text = item.name
 
+            if (item.isFavourite){
+                addToFavouriteButton.visibility = View.INVISIBLE
+                removeFromFavouriteButton.visibility = View.VISIBLE
+            }
+            else{
+                addToFavouriteButton.visibility = View.VISIBLE
+                removeFromFavouriteButton.visibility = View.INVISIBLE
+            }
+
             root.tag = item
             addToFavouriteButton.tag = item
             removeFromFavouriteButton.tag = item

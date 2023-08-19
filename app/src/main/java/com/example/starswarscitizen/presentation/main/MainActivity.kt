@@ -2,7 +2,6 @@ package com.example.starswarscitizen.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -26,8 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        var badge = binding.bottomNavigationView.getOrCreateBadge(R.id.searchFragment)
-        badge.isVisible = true
+        val searchBadge = binding.bottomNavigationView.getOrCreateBadge(R.id.searchFragment)
+        searchBadge.isVisible = true
+
+        val favouriteBadge = binding.bottomNavigationView.getOrCreateBadge(R.id.favouriteFragment)
+        favouriteBadge.isVisible = true
 
 
     }
