@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.R
 import com.example.starswarscitizen.databinding.FragmentSearchBinding
@@ -20,6 +22,7 @@ import com.example.starswarscitizen.presentation.search.view_model.SearchViewMod
 import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel.Companion.SEARCH_DEBOUNCE_DELAY
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -34,6 +37,7 @@ class SearchFragment : Fragment() {
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchResult: List<StarWarsItem>
     private lateinit var badge: BadgeDrawable
+    private var toastJob: Job? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,17 +62,23 @@ class SearchFragment : Fragment() {
 
         setRecyclerView()
 
-        binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
+        /*binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_GO -> {
-                    viewModel.startSearch(binding.searchEditText.text.toString())
+                    if (binding.searchEditText.text?.length!! < 2) {
+                        Toast.makeText(requireContext(), R.string.toast_text, Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        viewModel.startSearch(binding.searchEditText.text.toString())
+                    }
+
                     true
                 }
 
                 else -> false
             }
 
-        }
+        }*/
 
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             searchAdapter.submitList(results)
@@ -81,13 +91,15 @@ class SearchFragment : Fragment() {
             manageScreenContent(screenState)
         }
 
-        binding.searchEditText.addTextChangedListener(object : TextWatcher{
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.searchDebounce(s)
+                toastDebounce(s)
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -95,7 +107,6 @@ class SearchFragment : Fragment() {
             }
         })
     }
-
 
     private fun setRecyclerView() {
         searchAdapter =
@@ -181,12 +192,30 @@ class SearchFragment : Fragment() {
     }
 
 
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun toastDebounce(s: CharSequence?) {
+        if (!s.isNullOrEmpty() && s.length < 2) {
+
+            toastJob?.cancel()
+
+            toastJob = viewLifecycleOwner.lifecycleScope.launch {
+                delay(SEARCH_DEBOUNCE_DELAY)
+                hideKeyboard()
+                Snackbar.make(
+                    binding.searchConstraintLayout,
+                    R.string.toast_text,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    companion object {
+        const val SEARCH_DEBOUNCE_DELAY = 3000L
     }
 
 
