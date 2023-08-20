@@ -4,22 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.R
 import com.example.starswarscitizen.databinding.FragmentSearchBinding
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.presentation.search.models.SearchScreenState
 import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel
-import com.example.starswarscitizen.presentation.search.view_model.SearchViewModel.Companion.SEARCH_DEBOUNCE_DELAY
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -211,6 +207,9 @@ class SearchFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
+        }
+        else {
+            toastJob?.cancel()
         }
     }
 

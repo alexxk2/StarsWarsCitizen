@@ -3,7 +3,6 @@ package com.example.starswarscitizen.presentation.search.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.starswarscitizen.domain.favourite.AddToFavouritesUseCase
 import com.example.starswarscitizen.domain.favourite.DeleteFromFavouritesUseCase

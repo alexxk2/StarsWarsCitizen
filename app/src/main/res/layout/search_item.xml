@@ -18,17 +18,19 @@
 
         <ImageView
             android:id="@+id/item_image"
+            style="@style/AvatarImage"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="30"
             android:contentDescription="@string/item_image"
-            android:padding="8dp"
             android:src="@drawable/ic_r2d2" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
             android:layout_weight="70"
             android:orientation="vertical">
 
@@ -37,9 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:lines="1"
-                android:ellipsize="end"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 tools:text="@string/default_text" />
@@ -48,9 +50,9 @@
                 android:id="@+id/item_info_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:lines="1"
-                android:ellipsize="end"
                 android:textSize="11sp"
                 tools:text="@string/default_text" />
 
@@ -58,9 +60,9 @@
                 android:id="@+id/item_info_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:lines="1"
-                android:ellipsize="end"
                 android:textSize="11sp"
                 tools:text="@string/default_text" />
 
@@ -68,9 +70,9 @@
                 android:id="@+id/item_info_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
+                android:lines="1"
                 android:textSize="11sp"
                 tools:text="@string/default_text" />
 
@@ -82,10 +84,8 @@
         android:id="@+id/add_to_favourite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
+        style="@style/AddToFavouriteButton"
         android:contentDescription="@string/add_to_favourite"
-        android:src="@drawable/ic_add_to_favourite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

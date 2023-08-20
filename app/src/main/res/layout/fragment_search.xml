@@ -3,30 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_constraint_layout"
+    style="@style/CustomConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".presentation.search.ui.SearchFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_layout"
+        style="@style/CustomLayoutText"
         android:layout_width="0dp"
         android:layout_height="42dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:hint="@string/search"
-        android:textColorHint="@color/grey"
-        app:boxCornerRadiusBottomEnd="24dp"
-        app:boxCornerRadiusBottomStart="24dp"
-        app:boxCornerRadiusTopEnd="24dp"
-        app:boxCornerRadiusTopStart="24dp"
-        app:boxStrokeColor="@color/black"
-        app:endIconCheckable="true"
-        app:endIconDrawable="@drawable/ic_clear"
-        app:endIconMode="clear_text"
-        app:expandedHintEnabled="true"
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,14 +24,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_edit_text"
+            style="@style/CustomEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_edit_text_background"
-            android:imeOptions="actionGo"
-            android:inputType="text"
-            android:padding="0dp"
-            android:saveEnabled="false"
-            android:textSize="14sp" />
+            android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,11 +57,10 @@
 
         <ImageView
             android:id="@+id/image_not_found"
+            style="@style/ImageViewNotFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/not_found"
-            android:src="@drawable/ic_death_star" />
+            android:contentDescription="@string/not_found" />
 
         <TextView
             android:id="@+id/text_not_found"
@@ -110,11 +93,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            style="@style/ImageViewIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/intro"
-            android:src="@drawable/ic_r2d2" />
+            android:contentDescription="@string/intro" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -138,19 +120,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            style="@style/ImageViewError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/error"
-            android:src="@drawable/ic_dart_vader" />
+            android:contentDescription="@string/error" />
 
         <TextView
-            android:paddingHorizontal="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:layout_marginTop="24dp"
+            android:paddingHorizontal="8dp"
             android:text="@string/something_went_wrong"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
     </LinearLayout>

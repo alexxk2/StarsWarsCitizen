@@ -29,5 +29,9 @@
     <!--Favourite screen-->
     <string name="have_not_add_anything">You haven`t add anything to favourite yet</string>
 
+    <!--Settings screen-->
+    <string name="dark_side_of_the_force">Choose the Dark side of the Force</string>
+    <string name="light_side_of_the_force">Choose the Light side of the Force</string>
+
 
 </resources>

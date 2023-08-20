@@ -41,7 +41,7 @@ class FavouritesConverter {
                 infoField1 = infoField1,
                 infoField2 = infoField2,
                 infoField3 = infoField3,
-                type =type,
+                type = type,
                 isFavourite = isFavourite
             )
         }
