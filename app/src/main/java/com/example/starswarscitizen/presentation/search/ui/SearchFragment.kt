@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.R
@@ -19,33 +20,27 @@ import com.example.starswarscitizen.presentation.search.view_model.SearchViewMod
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SearchViewModel by viewModel()
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchResult: List<StarWarsItem>
     private lateinit var badge: BadgeDrawable
     private var toastJob: Job? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -57,24 +52,6 @@ class SearchFragment : Fragment() {
             ?.getBadge(R.id.searchFragment)!!
 
         setRecyclerView()
-
-        /*binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
-            return@setOnEditorActionListener when (actionId) {
-                EditorInfo.IME_ACTION_GO -> {
-                    if (binding.searchEditText.text?.length!! < 2) {
-                        Toast.makeText(requireContext(), R.string.toast_text, Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        viewModel.startSearch(binding.searchEditText.text.toString())
-                    }
-
-                    true
-                }
-
-                else -> false
-            }
-
-        }*/
 
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             searchAdapter.submitList(results)

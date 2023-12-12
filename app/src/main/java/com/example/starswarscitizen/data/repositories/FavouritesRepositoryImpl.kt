@@ -4,8 +4,9 @@ import com.example.starswarscitizen.data.converters.FavouritesConverter
 import com.example.starswarscitizen.data.db.RoomStorage
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.domain.repositories.FavouritesRepository
+import javax.inject.Inject
 
-class FavouritesRepositoryImpl(
+class FavouritesRepositoryImpl @Inject constructor(
     private val roomStorage: RoomStorage,
     private val converter: FavouritesConverter
 ) : FavouritesRepository {

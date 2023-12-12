@@ -6,6 +6,8 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     //Kotlin symbol processing  for Room
     id("com.google.devtools.ksp")
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 
 }
 
@@ -64,10 +66,6 @@ dependencies {
     //glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
-    //Koin
-    implementation "io.insert-koin:koin-core:$koin_version"
-    implementation "io.insert-koin:koin-android:$koin_version"
-    testImplementation "io.insert-koin:koin-test:$koin_version"
     //Splash screen
     implementation("androidx.core:core-splashscreen:1.0.1")
     // Room libraries
@@ -78,4 +76,8 @@ dependencies {
     //retrofit & Gson converter
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
 }

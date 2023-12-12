@@ -3,8 +3,9 @@ package com.example.starswarscitizen.data.converters
 import com.example.starswarscitizen.data.db.dto.StarWarsItemDto
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.domain.models.StarWarsObject
+import javax.inject.Inject
 
-class FavouritesConverter {
+class FavouritesConverter @Inject constructor() {
 
     fun mapFavouriteToData(starWarsItem: StarWarsItem): StarWarsItemDto {
 

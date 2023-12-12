@@ -8,9 +8,12 @@ import com.example.starswarscitizen.domain.favourite.DeleteFromFavouritesUseCase
 import com.example.starswarscitizen.domain.favourite.GetAllFavouritesUseCase
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.presentation.favourite.models.FavouritesScreenState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavouriteViewModel(
+@HiltViewModel
+class FavouriteViewModel @Inject constructor(
     private val getAllFavouritesUseCase: GetAllFavouritesUseCase,
     private val deleteFromFavouritesUseCase: DeleteFromFavouritesUseCase
 ): ViewModel() {
