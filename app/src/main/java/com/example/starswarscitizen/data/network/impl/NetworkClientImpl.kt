@@ -5,21 +5,9 @@ import com.example.starswarscitizen.data.network.StarWarsApiService
 import com.example.starswarscitizen.data.network.dto.HumanDto
 import com.example.starswarscitizen.data.network.dto.PlanetDto
 import com.example.starswarscitizen.data.network.dto.StarshipDto
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class NetworkClientImpl : NetworkClient {
-
-    private val baseUrl = "https://swapi.dev"
-
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .build()
-
-    private val retrofitService: StarWarsApiService by lazy {
-        retrofit.create(StarWarsApiService::class.java)
-    }
+class NetworkClientImpl @Inject constructor (private val retrofitService: StarWarsApiService) : NetworkClient {
 
     override suspend fun getPeopleSearchResult(searchInput: String): List<HumanDto> {
 

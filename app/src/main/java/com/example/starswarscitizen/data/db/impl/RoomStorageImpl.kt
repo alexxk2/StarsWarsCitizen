@@ -1,12 +1,11 @@
 package com.example.starswarscitizen.data.db.impl
 
-import com.example.starswarscitizen.data.db.FavouritesDatabase
+import com.example.starswarscitizen.data.db.FavouritesDao
 import com.example.starswarscitizen.data.db.RoomStorage
 import com.example.starswarscitizen.data.db.dto.StarWarsItemDto
+import javax.inject.Inject
 
-class RoomStorageImpl(private val favouritesDatabase: FavouritesDatabase) : RoomStorage {
-
-    private val favouritesDao = favouritesDatabase.favouritesDao()
+class RoomStorageImpl @Inject constructor(private val favouritesDao: FavouritesDao) : RoomStorage {
 
     override suspend fun addToFavourites(starWarsItemDto: StarWarsItemDto) {
         favouritesDao.addNewItem(starWarsItemDto)

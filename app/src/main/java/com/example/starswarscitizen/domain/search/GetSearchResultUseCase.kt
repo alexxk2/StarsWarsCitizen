@@ -4,8 +4,9 @@ import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.domain.models.StarWarsObject
 import com.example.starswarscitizen.domain.repositories.FavouritesRepository
 import com.example.starswarscitizen.domain.repositories.SearchRepository
+import javax.inject.Inject
 
-class GetSearchResultUseCase(
+class GetSearchResultUseCase @Inject constructor(
     private val searchRepository: SearchRepository,
     private val favouritesRepository: FavouritesRepository
 ) {

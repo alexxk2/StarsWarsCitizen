@@ -9,11 +9,14 @@ import com.example.starswarscitizen.domain.favourite.DeleteFromFavouritesUseCase
 import com.example.starswarscitizen.domain.models.StarWarsItem
 import com.example.starswarscitizen.domain.search.GetSearchResultUseCase
 import com.example.starswarscitizen.presentation.search.models.SearchScreenState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val getSearchResultUseCase: GetSearchResultUseCase,
     private val deleteFromFavouritesUseCase: DeleteFromFavouritesUseCase,
     private val addToFavouritesUseCase: AddToFavouritesUseCase

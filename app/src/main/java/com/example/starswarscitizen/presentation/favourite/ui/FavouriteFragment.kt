@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.starswarscitizen.R
 import com.example.starswarscitizen.databinding.FragmentFavouriteBinding
@@ -14,28 +15,23 @@ import com.example.starswarscitizen.presentation.favourite.view_model.FavouriteV
 import com.example.starswarscitizen.presentation.search.ui.SearchAdapter
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class FavouriteFragment : Fragment() {
 
     private var _binding: FragmentFavouriteBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: FavouriteViewModel by viewModel()
+    private val viewModel: FavouriteViewModel by viewModels()
     private lateinit var favouriteAdapter: SearchAdapter
     private lateinit var badge: BadgeDrawable
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavouriteBinding.inflate(layoutInflater,container,false)
         return binding.root
     }

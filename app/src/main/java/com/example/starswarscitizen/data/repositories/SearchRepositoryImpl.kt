@@ -6,8 +6,9 @@ import com.example.starswarscitizen.domain.models.Human
 import com.example.starswarscitizen.domain.models.Planet
 import com.example.starswarscitizen.domain.models.Starship
 import com.example.starswarscitizen.domain.repositories.SearchRepository
+import javax.inject.Inject
 
-class SearchRepositoryImpl(
+class SearchRepositoryImpl @Inject constructor(
     private val networkClient: NetworkClient,
     private val converter: SearchConverter
 ) : SearchRepository {

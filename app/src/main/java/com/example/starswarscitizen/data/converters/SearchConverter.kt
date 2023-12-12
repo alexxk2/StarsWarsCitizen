@@ -6,8 +6,9 @@ import com.example.starswarscitizen.data.network.dto.StarshipDto
 import com.example.starswarscitizen.domain.models.Human
 import com.example.starswarscitizen.domain.models.Planet
 import com.example.starswarscitizen.domain.models.Starship
+import javax.inject.Inject
 
-class SearchConverter {
+class SearchConverter @Inject constructor() {
 
     fun mapHumanToDomain(humanDto: HumanDto): Human {
         with(humanDto) {
